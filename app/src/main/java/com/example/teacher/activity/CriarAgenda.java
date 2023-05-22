@@ -57,13 +57,13 @@ public class CriarAgenda extends AppCompatActivity {
                     Toast.makeText(CriarAgenda.this, "Todos os campos são obrigatórios!", Toast.LENGTH_SHORT).show();
                 } else {
                     agenda = new Agenda();
-                    String data = txtDataAula.getText().toString();
+                    //String data = ;
                     agenda.setCurso(txtCurso.getText().toString());
                     agenda.setMateria(txtMateria.getText().toString());
                     agenda.setLocal(txtLocal.getText().toString());
-                    agenda.setData(data);
+                    agenda.setData(txtDataAula.getText().toString());
                     agenda.setHora(txtHoraAula.getText().toString());
-                    agenda.salvar(data);
+                    agenda.salvar();
                     Toast.makeText(CriarAgenda.this, "Agenda Criada com sucesso!", Toast.LENGTH_SHORT).show();
                     abrirTelaAgenda();
                     finish();

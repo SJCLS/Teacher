@@ -121,7 +121,6 @@ public class AgendaActivity extends AppCompatActivity {
         }
     }
 
-
     public void recuperarAgendas() {
         autenticacao = FirebaseAuth.getInstance();
         System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+autenticacao.getCurrentUser().getEmail());
@@ -134,8 +133,7 @@ public class AgendaActivity extends AppCompatActivity {
 
         DatabaseReference agendasUsuarioRef = agendaRef
                 .child("agendaProfessor")
-                .child(idUsuario)
-                .child("052023");
+                .child(idUsuario);
 
         valueEventListenerAgendas = agendasUsuarioRef.addValueEventListener(new ValueEventListener() {
             @Override

@@ -53,12 +53,12 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Preencha a Senha!", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    System.out.println("loginnnnnnnnnnnnnnnnnnnnnnnnnn");
                     professor = new Professor();
                     professor.setEmail(textoEmail);
                     professor.setSenha(textoSenha);
                     validarLogin();
                 }
-
             }
         });
         btnCriarConta.setOnClickListener(new View.OnClickListener() {

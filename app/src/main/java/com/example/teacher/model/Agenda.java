@@ -18,14 +18,12 @@ public class Agenda implements Serializable {
     private String resumo;
     public Agenda() {
     }
-    public void salvar(String dataEscolhida) {
+    public void salvar() {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
-        String mesAno = DateCustom.dateCustomEscolhida(dataEscolhida);
         DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
         firebase.child("agendaProfessor")
                 .child(idUsuario)
-                .child(mesAno)
                 .push()
                 .setValue(this);
     }
