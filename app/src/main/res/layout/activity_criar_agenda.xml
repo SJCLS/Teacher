@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#013A56"
+    android:onClick="fecharTeclado"
+    tools:context=".activity.CriarAgenda">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_agenda" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:hapticFeedbackEnabled="false"
+            android:hint="Nome do Curso..."
+            android:textColorHint="#FFFFFF"
+            app:boxBackgroundColor="#1E96C7"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#C4E5F6"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:hintTextColor="#FFFFFF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:hapticFeedbackEnabled="false"
+            android:hint="Nome da Matéria..."
+            android:textColorHint="#FFFFFF"
+            app:boxBackgroundColor="#1E96C7"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#C4E5F6"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:hintTextColor="#FFFFFF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:hapticFeedbackEnabled="false"
+            android:hint="Nome do Local..."
+            android:textColorHint="#FFFFFF"
+            app:boxBackgroundColor="#1E96C7"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#C4E5F6"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:hintTextColor="#FFFFFF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtConfirmarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:hapticFeedbackEnabled="false"
+                android:hint="Hora da aula..."
+                android:textColorHint="#FFFFFF"
+                app:boxBackgroundColor="#1E96C7"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="#C4E5F6"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:hintTextColor="#FFFFFF">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtHoraAula"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="time" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:hapticFeedbackEnabled="false"
+                android:hint="Data da aula..."
+                android:textColorHint="#FFFFFF"
+                app:boxBackgroundColor="#1E96C7"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="#C4E5F6"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:hintTextColor="#FFFFFF">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtDataAula"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCriarNovaAgenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="#F6A717"
+        android:text="Criar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="#E2520F"
+        android:text="Cancelar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
