@@ -77,7 +77,6 @@ public class CriarAgenda extends AppCompatActivity {
         InputMethodManager fecharTeclado = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         fecharTeclado.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
     @Override
     public void onBackPressed() {
         Intent ir = new Intent(CriarAgenda.this, Agenda.class);

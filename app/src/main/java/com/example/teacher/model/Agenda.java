@@ -25,7 +25,6 @@ public class Agenda implements Serializable {
 
     public Agenda() {
     }
-
     public Agenda(String id, String curso, String materia, String local, String data, String hora, String resumo) {
         this.id = id;
         this.curso = curso;
@@ -35,63 +34,48 @@ public class Agenda implements Serializable {
         this.hora = hora;
         this.resumo = resumo;
     }
-
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public String getCurso() {
         return curso;
     }
-
     public void setCurso(String curso) {
         this.curso = curso;
     }
-
     public String getMateria() {
         return materia;
     }
-
     public void setMateria(String materia) {
         this.materia = materia;
     }
-
     public String getLocal() {
         return local;
     }
-
     public void setLocal(String local) {
         this.local = local;
     }
-
     public String getData() {
         return data;
     }
-
     public void setData(String data) {
         this.data = data;
     }
-
     public String getHora() {
         return hora;
     }
-
     public void setHora(String hora) {
         this.hora = hora;
     }
-
     public String getResumo() {
         return resumo;
     }
-
     public void setResumo(String resumo) {
         this.resumo = resumo;
     }
-
     public void salvar(String agendaId) {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
@@ -131,7 +115,6 @@ public class Agenda implements Serializable {
                     }
                 });
     }
-
     @Override
     public String toString() {
         return "Agenda{" +
