@@ -8,16 +8,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Agenda implements Serializable {
     private int id;
     private String curso;
     private String materia;
     private String local;
-    private String data,hora;
+    private String data, hora;
     private String resumo;
+
     public Agenda() {
     }
+
     public void salvar() {
         FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
@@ -28,7 +32,22 @@ public class Agenda implements Serializable {
                 .setValue(this);
     }
 
-    public Agenda(int id, String curso, String materia, String local, String data,String hora, String resumo) {
+    public void alterar() {
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
+        String agendaId = firebase.child("agendaProfessor").child(idUsuario).push().getKey();
+
+        // Crie um Map com os valores que você deseja atualizar
+        Map<String, Object> atualizacao = new HashMap<>();
+        atualizacao.put(agendaId, this);
+
+        // Atualize os valores no Firebase Database
+        firebase.child("agendaProfessor")
+                .child(idUsuario)
+                .updateChildren(atualizacao);
+    }
+    public Agenda(int id, String curso, String materia, String local, String data, String hora, String resumo) {
         this.id = id;
         this.curso = curso;
         this.materia = materia;

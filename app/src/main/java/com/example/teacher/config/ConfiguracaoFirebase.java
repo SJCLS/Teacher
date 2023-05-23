@@ -17,7 +17,6 @@ public class ConfiguracaoFirebase {
 
     public static FirebaseAuth getFirebaseAutenticacao(){
         autenticacao = FirebaseAuth.getInstance();
-        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+autenticacao.getCurrentUser().getEmail());
         if (autenticacao == null){
             autenticacao = FirebaseAuth.getInstance();
         }
