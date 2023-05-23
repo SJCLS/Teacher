@@ -3,7 +3,9 @@ package com.example.teacher.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -78,6 +80,7 @@ public class Cadastro extends AppCompatActivity {
             public void onClick(View view) {
                 Intent ir = new Intent(Cadastro.this, Login.class);
                 startActivity(ir);
+                finish();
             }
         });
     }
@@ -122,4 +125,38 @@ public class Cadastro extends AppCompatActivity {
                     }
                 });
     }
+    @Override
+    public void onBackPressed() {
+        String nome = txtNome.getText().toString();
+        String email = txtEmail.getText().toString();
+
+        if (!nome.isEmpty() || !email.isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Cadastro.this);
+            builder.setMessage("Os dados preenchidos serão perdidos. Deseja continuar?");
+            builder.setCancelable(true);
+
+            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(Cadastro.this, Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } else {
+            Intent intent = new Intent(Cadastro.this, Login.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 }

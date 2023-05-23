@@ -103,11 +103,8 @@ public class AgendaActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        System.out.println(">>>>>>>>>>ENTROUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
         super.onStart();
-        System.out.println(">>>>>>>>>>Vaiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+valueEventListenerAgendas);
         //if (valueEventListenerAgendas != null) {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             recuperarAgendas();
         //}
     }
@@ -123,14 +120,11 @@ public class AgendaActivity extends AppCompatActivity {
 
     public void recuperarAgendas() {
         autenticacao = FirebaseAuth.getInstance();
-        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"+autenticacao.getCurrentUser().getEmail());
         if (autenticacao == null){
             autenticacao = FirebaseAuth.getInstance();
         }
-        System.out.println("************************************"+autenticacao.getCurrentUser().getEmail());
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String idUsuario = Base64Custom.codificarBase64(emailUsuario);
-
         DatabaseReference agendasUsuarioRef = agendaRef
                 .child("agendaProfessor")
                 .child(idUsuario);
@@ -141,9 +135,7 @@ public class AgendaActivity extends AppCompatActivity {
                 listaAgenda.clear();
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     Agenda agenda = dados.getValue(Agenda.class);
-                    System.out.println(">>>>>>>>>>Agenda: "+agenda);
                     listaAgenda.add(agenda);
-                    System.out.println(">>>>>>>>>>Lista Agenda: "+listaAgenda);
                 }
                 adapterAgenda.notifyDataSetChanged();
             }

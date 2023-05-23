@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 import com.example.teacher.R;
 import com.example.teacher.adapter.AdapterAgenda;
+import com.example.teacher.config.ConfiguracaoFirebase;
+import com.example.teacher.helper.Base64Custom;
 import com.example.teacher.model.Agenda;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
@@ -22,7 +26,8 @@ public class Resumo extends AppCompatActivity {
     private Agenda agenda;
     private TextView textNome, textMateria, textLocal, textData, textHora, textResumo;
     private Button buttonSalvar, buttonCancelar;
-    private AdapterAgenda adapterAgenda;
+    private DatabaseReference agendaRef;
+    private FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +41,39 @@ public class Resumo extends AppCompatActivity {
         textResumo = findViewById(R.id.txtResumo);
         buttonSalvar = findViewById(R.id.btnSalvar);
         buttonCancelar = findViewById(R.id.btnCancelar);
+       agendaRef = ConfiguracaoFirebase.getFirebaseDatabase().child("agendaProfessor");
 
-        buttonSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String resumo = textResumo.getText().toString();
 
-                agenda = new Agenda();
-                //String data = ;
-                agenda.setResumo(textResumo.getText().toString());
-                agenda.setCurso(textNome.getText().toString());
-                agenda.setMateria(textMateria.getText().toString());
-                agenda.setLocal(textLocal.getText().toString());
-                agenda.setData(textData.getText().toString());
-                agenda.setHora(textHora.getText().toString());
-                agenda.setId(agenda.getId());
-                agenda.alterar();
-                Toast.makeText(Resumo.this, "Agenda atualizada com sucesso!", Toast.LENGTH_SHORT).show();
-                abrirTelaAgenda();
-                finish();
-            }
-        });
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            agenda = (Agenda) extras.getSerializable("agenda");
 
+            textNome.setText(agenda.getCurso());
+            textMateria.setText(agenda.getMateria());
+            textLocal.setText(agenda.getLocal());
+            textData.setText(agenda.getData());
+            textHora.setText(agenda.getHora());
+            textResumo.setText(agenda.getResumo());
+
+            buttonSalvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String resumo = textResumo.getText().toString();
+                    String idUsuario = agenda.getId();
+                    if (resumo.isEmpty()) {
+                        Toast.makeText(Resumo.this, "Preencha o resumo!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        agenda.setResumo(resumo);
+                        agenda.salvarResumo(idUsuario);
+
+                        Toast.makeText(Resumo.this, "Agenda atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+                        abrirTelaAgenda();
+                        finish();
+                    }
+                }
+            });
+        }
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,22 +81,6 @@ public class Resumo extends AppCompatActivity {
                 finish();
             }
         });
-
-        // recuperando o objeto de hotel passado como parâmetro
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            agenda = (Agenda) extras.getSerializable("agenda");
-
-            // setando a descrição do hotel
-            textNome.setText(agenda.getCurso());
-            textMateria.setText(agenda.getMateria());
-            textLocal.setText(agenda.getLocal());
-            textData.setText(agenda.getData());
-            textHora.setText(agenda.getHora());
-            textResumo.setText(agenda.getResumo());
-        }
-
     }
 
     public void fecharTeclado(View view) {

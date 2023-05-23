@@ -1,53 +1,32 @@
 package com.example.teacher.model;
 
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.example.teacher.activity.Resumo;
 import com.example.teacher.config.ConfiguracaoFirebase;
 import com.example.teacher.helper.Base64Custom;
-import com.example.teacher.helper.DateCustom;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Agenda implements Serializable {
-    private int id;
+    private String id;
     private String curso;
     private String materia;
     private String local;
-    private String data, hora;
+    private String data;
+    private String hora;
     private String resumo;
 
     public Agenda() {
     }
 
-    public void salvar() {
-        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
-        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
-        firebase.child("agendaProfessor")
-                .child(idUsuario)
-                .push()
-                .setValue(this);
-    }
-
-    public void alterar() {
-        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
-        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
-        String agendaId = firebase.child("agendaProfessor").child(idUsuario).push().getKey();
-
-        // Crie um Map com os valores que você deseja atualizar
-        Map<String, Object> atualizacao = new HashMap<>();
-        atualizacao.put(agendaId, this);
-
-        // Atualize os valores no Firebase Database
-        firebase.child("agendaProfessor")
-                .child(idUsuario)
-                .updateChildren(atualizacao);
-    }
-    public Agenda(int id, String curso, String materia, String local, String data, String hora, String resumo) {
+    public Agenda(String id, String curso, String materia, String local, String data, String hora, String resumo) {
         this.id = id;
         this.curso = curso;
         this.materia = materia;
@@ -57,11 +36,11 @@ public class Agenda implements Serializable {
         this.resumo = resumo;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,6 +76,14 @@ public class Agenda implements Serializable {
         this.data = data;
     }
 
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
     public String getResumo() {
         return resumo;
     }
@@ -105,12 +92,44 @@ public class Agenda implements Serializable {
         this.resumo = resumo;
     }
 
-    public String getHora() {
-        return hora;
+    public void salvar(String agendaId) {
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
+        firebase.child("agendaProfessor")
+                .child(idUsuario)
+                .child(agendaId) // Utilize o ID recebido como parâmetro
+                .setValue(this);
     }
-
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void salvarResumo(String agendaId) {
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
+        firebase.child("agendaProfessor")
+                .child(idUsuario)
+                .child(agendaId)
+                .setValue(this);
+    }
+    public void excluirAgenda(String agendaId) {
+        FirebaseAuth autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+        DatabaseReference firebase = ConfiguracaoFirebase.getFirebaseDatabase();
+        firebase.child("agendaProfessor")
+                .child(idUsuario)
+                .child(agendaId)
+                .removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // A agenda foi excluída com sucesso
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Ocorreu um erro ao excluir a agenda
+                    }
+                });
     }
 
     @Override
